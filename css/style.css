@@ -1,0 +1,253 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.campaign-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.campaign-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.campaign-card .btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.campaign-card .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+footer {
+    border-top: 1px solid #dee2e6;
+    color: #6c757d;
+}
+
+h1, h2 {
+    color: #343a40;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.7rem;
+}
+
+.card {
+    border-radius: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .campaign-card {
+        margin-bottom: 20px;
+    }
+}
+
+.nav-link {
+    font-size:1.10rem;
+   color:#005461;
+   /* padding:1.5rem; */
+   font-weight: 500;
+}
+
+.nav-link:hover{
+    color:#005461;
+    font-weight:800;
+    background-color:#BBE0EF;
+  box-shadow: 4px 4px 15px 2px #BDE8F5;
+  border:1px solid #4988C4;
+
+}
+.nav-item a{
+    border:1px solid #4988C4;
+    margin: 10px;
+    border-radius:10px;
+}
+
+/* ===== অথেনটিকেশন কার্ড স্টাইল ===== */
+.auth-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    padding: 40px 30px;
+    margin: 20px 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0,123,255,0.2);
+}
+
+.admin-auth-card {
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #007bff, #00d4ff) border-box;
+    border-radius: 20px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h2 {
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    font-size: 1rem;
+}
+
+/* ফর্ম এলিমেন্ট */
+.auth-form .form-floating {
+    margin-bottom: 20px;
+}
+
+.auth-form .form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 1rem 0.75rem;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.auth-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+.auth-form .form-floating label {
+    padding: 1rem 0.75rem;
+    color: #6c757d;
+}
+
+.auth-form .form-text {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+/* চেকবক্স ও লিংক */
+.form-check-input:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.form-check-label {
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+/* বাটন */
+.auth-form .btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.auth-form .btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3, #003d80);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,123,255,0.4);
+}
+
+.auth-form .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* ফুটার */
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.auth-footer a {
+    color: #007bff;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.auth-footer a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* অ্যালার্ট কাস্টমাইজ */
+.alert {
+    border-radius: 10px;
+    border: none;
+    padding: 15px 20px;
+}
+
+.alert-danger {
+    background: #fff2f0;
+    color: #dc3545;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-success {
+    background: #e8f5e9;
+    color: #28a745;
+    border-left: 4px solid #28a745;
+}
+
+.alert ul {
+    padding-left: 20px;
+}
+
+/* অ্যাডমিন অথেনটিকেশন ব্যাকগ্রাউন্ড */
+.admin-auth-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+/* রেসপন্সিভ */
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+    
+    .auth-header h2 {
+        font-size: 1.8rem;
+    }
+}
