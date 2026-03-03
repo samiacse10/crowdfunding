@@ -68,16 +68,34 @@ if (!$canView) {
     redirect('index.php');
 }
 
-// Check for donation success message
+// Check for donation success message from session
 $donation_success = isset($_SESSION['donation_success']) ? $_SESSION['donation_success'] : false;
 $donation_amount = isset($_SESSION['donation_amount']) ? $_SESSION['donation_amount'] : 0;
 $donation_name = isset($_SESSION['donation_name']) ? $_SESSION['donation_name'] : '';
+$donation_message = isset($_SESSION['donation_message']) ? $_SESSION['donation_message'] : '';
 
-// Clear session variables after retrieving
+// Clear session variables after retrieving to prevent showing message again on refresh
 unset($_SESSION['donation_success']);
 unset($_SESSION['donation_amount']);
 unset($_SESSION['donation_name']);
 unset($_SESSION['donation_message']);
+
+// Refresh campaign data to show updated donation count and amount
+if ($donation_success) {
+    $refreshStmt = $pdo->prepare("SELECT campaigns.*, categories.name as category_name,
+            users.username as organizer_username, users.email as organizer_email,
+            (SELECT COUNT(*) FROM donations WHERE campaign_id = campaigns.id) as donor_count,
+            (SELECT COALESCE(SUM(amount), 0) FROM donations WHERE campaign_id = campaigns.id) as raised_amount
+            FROM campaigns 
+            LEFT JOIN categories ON campaigns.category_id = categories.id 
+            LEFT JOIN users ON campaigns.user_id = users.id
+            WHERE campaigns.id = ?");
+    $refreshStmt->execute([$id]);
+    $campaign = $refreshStmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Recalculate progress with updated data
+    $progress = min(100, round(($campaign['raised_amount'] / $campaign['target_amount']) * 100, 1));
+}
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +160,7 @@ unset($_SESSION['donation_message']);
         }
 
         /* Share buttons */
-        .btn-outline-primary, .btn-outline-info, .btn-outline-secondary, .btn-outline-danger {
+        .btn-outline-primary, .btn-outline-info, .btn-outline-secondary, .btn-outline-danger, .btn-outline-success {
             border-width: 2px;
             padding: 0;
             display: inline-flex;
@@ -154,7 +172,8 @@ unset($_SESSION['donation_message']);
         .btn-outline-primary:hover,
         .btn-outline-info:hover,
         .btn-outline-secondary:hover,
-        .btn-outline-danger:hover {
+        .btn-outline-danger:hover,
+        .btn-outline-success:hover {
             transform: translateY(-2px);
         }
 
@@ -218,6 +237,19 @@ unset($_SESSION['donation_message']);
             border: none;
             color: #155724;
             animation: slideDown 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alert-success::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            animation: progressBar 5s linear forwards;
         }
 
         @keyframes slideDown {
@@ -230,9 +262,39 @@ unset($_SESSION['donation_message']);
                 opacity: 1;
             }
         }
+        
+        @keyframes progressBar {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0%;
+            }
+        }
 
         .alert-success .btn-close {
             filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        /* Confetti animation for donation success */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f0f0f0;
+            opacity: 0;
+            animation: confetti 5s ease-in-out;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
         }
 
         /* Responsive adjustments */
@@ -329,35 +391,85 @@ unset($_SESSION['donation_message']);
         body.dark-mode .table tbody tr:hover {
             background-color: rgba(0,198,255,0.1);
         }
+        
+        /* Heartbeat animation for new donation */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .new-donation {
+            animation: heartbeat 1s ease;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
     </style>
 </head>
 <body>
 
 <div class="container mt-4">
-    <!-- Donation Success Alert -->
+    <!-- Donation Success Alert - Shows after successful donation -->
     <?php if ($donation_success): ?>
-    <div class="alert alert-success alert-dismissible fade show rounded-4 shadow-sm mb-4" role="alert">
+    <div class="alert alert-success alert-dismissible fade show rounded-4 shadow-sm mb-4" role="alert" id="donationSuccessAlert">
         <div class="d-flex align-items-center">
-            <div class="me-3">
-                <i class="fa-solid fa-circle-check fa-2x"></i>
+            <div class="me-3 position-relative">
+                <i class="fa-solid fa-circle-check fa-3x" style="color: #28a745;"></i>
+                <i class="fa-solid fa-heart fa-2x position-absolute top-0 start-100 translate-middle" style="color: #ff6b6b; animation: heartbeat 1s infinite;"></i>
             </div>
             <div>
-                <h4 class="alert-heading mb-1">Thank You for Your Donation! 🎉</h4>
-                <p class="mb-0">
-                    <strong>$<?php echo number_format($donation_amount, 2); ?></strong> donated 
+                <h4 class="alert-heading mb-1">Thank You for Your Generous Donation! 🎉</h4>
+                <p class="mb-0 fs-5">
+                    <strong class="fs-4">$<?php echo number_format($donation_amount, 2); ?></strong> has been successfully donated
                     <?php if ($donation_name && $donation_name != 'Anonymous'): ?>
                         by <strong><?php echo htmlspecialchars($donation_name); ?></strong>
                     <?php endif; ?>
-                    has been successfully processed. Your support means the world to this campaign!
                 </p>
+                <?php if (!empty($donation_message)): ?>
+                <p class="mt-2 mb-0 fst-italic">
+                    "<?php echo htmlspecialchars($donation_message); ?>"
+                </p>
+                <?php endif; ?>
             </div>
             <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <hr class="mt-3 mb-2">
-        <p class="mb-0 small">
-            <i class="fa-regular fa-clock me-1"></i> Your donation will appear in the donors list below shortly.
-        </p>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="mb-0 small">
+                <i class="fa-regular fa-clock me-1"></i> Your donation has been recorded and will appear in the donors list below.
+            </p>
+            <span class="badge bg-white text-success">
+                <i class="fa-regular fa-circle-check me-1"></i>Completed
+            </span>
+        </div>
     </div>
+    
+    <!-- Confetti Effect Script -->
+    <script>
+    (function() {
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#28a745', '#20c997', '#17a2b8', '#ffc107', '#dc3545'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        createConfetti();
+    })();
+    </script>
     <?php endif; ?>
 
     <!-- Campaign Header with Edit Button -->
@@ -632,6 +744,13 @@ unset($_SESSION['donation_message']);
                         $donationStmt->execute([$id]);
                     }
                     $donations = $donationStmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    // Check if this is a new donation (just made)
+                    $new_donation_index = -1;
+                    if ($donation_success && count($donations) > 0) {
+                        // The first donation (most recent) might be the one just made
+                        $new_donation_index = 0;
+                    }
                     ?>
                     
                     <?php if (count($donations) > 0): ?>
@@ -650,8 +769,8 @@ unset($_SESSION['donation_message']);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($donations as $donation): ?>
-                                    <tr>
+                                    <?php foreach ($donations as $index => $donation): ?>
+                                    <tr class="<?php echo ($donation_success && $index === 0) ? 'new-donation' : ''; ?>">
                                         <td>
                                             <?php if ($donation['is_anonymous']): ?>
                                                 <span class="badge bg-secondary">
@@ -666,6 +785,9 @@ unset($_SESSION['donation_message']);
                                                     echo htmlspecialchars($donation['donor_name'] ?? 'Anonymous Donor');
                                                 }
                                                 ?>
+                                            <?php endif; ?>
+                                            <?php if ($donation_success && $index === 0 && !$donation['is_anonymous']): ?>
+                                                <span class="badge bg-success ms-2">New!</span>
                                             <?php endif; ?>
                                         </td>
                                         <td class="fw-bold text-success">$<?php echo number_format($donation['amount'], 2); ?></td>
@@ -742,14 +864,22 @@ unset($_SESSION['donation_message']);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-// Auto-dismiss alert after 5 seconds
+// Auto-dismiss alert after 8 seconds
 document.addEventListener('DOMContentLoaded', function() {
-    const alert = document.querySelector('.alert-success');
+    const alert = document.getElementById('donationSuccessAlert');
     if (alert) {
         setTimeout(function() {
             const bsAlert = new bootstrap.Alert(alert);
             bsAlert.close();
-        }, 5000);
+        }, 8000);
+    }
+    
+    // Scroll to highlight new donation if exists
+    const newDonation = document.querySelector('.new-donation');
+    if (newDonation) {
+        setTimeout(() => {
+            newDonation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 500);
     }
 });
 
