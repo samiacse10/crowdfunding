@@ -303,7 +303,7 @@ unset($_SESSION['success'], $_SESSION['error']);
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h6 class="text-white-50 mb-2">Total Amount</h6>
-                    <h3 class="fw-bold mb-0">$<?php echo number_format($stats['total_amount'], 2); ?></h3>
+                    <h3 class="fw-bold mb-0">৳<?php echo number_format($stats['total_amount'], 2); ?></h3>
                     <small class="text-white-50">Avg: $<?php echo number_format($stats['avg_amount'], 2); ?></small>
                 </div>
                 <div class="stat-icon">
