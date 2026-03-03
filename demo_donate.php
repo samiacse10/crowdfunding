@@ -3,7 +3,7 @@ require_once 'header.php';
 
 // Check if user is logged in
 if (!isLoggedIn()) {
-    $_SESSION['error'] = "Please login to make a  donation";
+    $_SESSION['error'] = "Please login to make a donation";
     redirect('login.php');
 }
 
@@ -122,32 +122,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <form method="POST">
                         <div class="mb-4">
                             <label class="form-label fw-semibold">Amount (৳)</label>
-                            <div class="row g-2">
+                            <div class="row g-2 mb-3">
                                 <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100" onclick="setAmount(10)">$10</button>
+                                    <button type="button" class="btn btn-outline-primary w-100 amount-preset" data-amount="10">৳10</button>
                                 </div>
                                 <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100" onclick="setAmount(25)">$25</button>
+                                    <button type="button" class="btn btn-outline-primary w-100 amount-preset" data-amount="25">৳25</button>
                                 </div>
                                 <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100" onclick="setAmount(50)">$50</button>
+                                    <button type="button" class="btn btn-outline-primary w-100 amount-preset" data-amount="50">৳50</button>
                                 </div>
                                 <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100" onclick="setAmount(100)">$100</button>
+                                    <button type="button" class="btn btn-outline-primary w-100 amount-preset" data-amount="100">৳100</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 amount-preset" data-amount="500">৳500</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 amount-preset" data-amount="1000">৳1000</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 amount-preset" data-amount="5000">৳5000</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 amount-preset" data-amount="10000">৳10000</button>
                                 </div>
                             </div>
-                            <input type="number" name="amount" id="amount" class="form-control form-control-lg mt-3" 
-                                   placeholder="Enter amount" min="1" step="0.01" required>
+                            <div class="input-group">
+                                <span class="input-group-text">৳</span>
+                                <input type="number" name="amount" id="amount" class="form-control form-control-lg" 
+                                       placeholder="Enter amount" min="1" step="1" required>
+                            </div>
+                            <small class="text-muted">Minimum donation: ৳1</small>
                         </div>
                         
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">Payment Method </label>
+                            <label class="form-label fw-semibold">Payment Method</label>
                             <select name="payment_method" class="form-select form-select-lg" required>
-                                <option value="bkash">📱 bKash </option>
-                                <option value="nagad">📱 Nagad </option>
-                                <option value="rocket">🚀 Rocket </option>
-                                <option value="bank">🏦 Bank Transfer </option>
-                                <option value="card">💳 Credit Card </option>
+                                <option value="bkash">📱 bKash (Demo)</option>
+                                <option value="nagad">📱 Nagad (Demo)</option>
+                                <option value="rocket">🚀 Rocket (Demo)</option>
+                                <option value="bank">🏦 Bank Transfer (Demo)</option>
+                                <option value="card">💳 Credit Card (Demo)</option>
                             </select>
                             <small class="text-muted">All payment methods are simulated for demonstration</small>
                         </div>
@@ -169,8 +185,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
                         <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">
                             <i class="fa-solid fa-flask me-2"></i>
-                            Complete  Donation
+                            Complete Demo Donation
                         </button>
+                        
+                        <div class="text-center mt-3">
+                            <a href="campaign.php?id=<?php echo $campaign_id; ?>" class="text-muted text-decoration-none">
+                                <i class="fa-regular fa-arrow-left me-1"></i> Back to Campaign
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -182,16 +204,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 function setAmount(amount) {
     document.getElementById('amount').value = amount;
 }
+
+// Preset amount buttons with active state
+document.querySelectorAll('.amount-preset').forEach(button => {
+    button.addEventListener('click', function() {
+        const amount = this.dataset.amount;
+        document.getElementById('amount').value = amount;
+        
+        // Remove active class from all preset buttons
+        document.querySelectorAll('.amount-preset').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+    });
+});
+
+// Remove active class from presets when manually typing amount
+document.getElementById('amount').addEventListener('input', function() {
+    document.querySelectorAll('.amount-preset').forEach(btn => {
+        btn.classList.remove('active');
+    });
+});
 </script>
 
 <style>
 .btn-outline-primary {
     transition: all 0.3s ease;
+    border-width: 2px;
 }
 
-.btn-outline-primary:hover {
+.btn-outline-primary:hover,
+.btn-outline-primary.active {
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0,198,255,0.3);
+    border-color: transparent;
+}
+
+.input-group-text {
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0072ff;
+    box-shadow: 0 0 0 0.2rem rgba(0,114,255,0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .amount-preset {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.2rem;
+    }
+    
+    .row.g-2.mb-3 .col-3 {
+        width: 25%;
+    }
 }
 </style>
 
