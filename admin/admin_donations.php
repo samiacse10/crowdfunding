@@ -304,10 +304,10 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <div>
                     <h6 class="text-white-50 mb-2">Total Amount</h6>
                     <h3 class="fw-bold mb-0">৳<?php echo number_format($stats['total_amount'], 2); ?></h3>
-                    <small class="text-white-50">Avg: $<?php echo number_format($stats['avg_amount'], 2); ?></small>
+                    <small class="text-white-50">Avg: ৳<?php echo number_format($stats['avg_amount'], 2); ?></small>
                 </div>
                 <div class="stat-icon">
-                    <i class="fa-solid fa-dollar-sign fa-3x opacity-50"></i>
+                    <i class="fa-solid fa-bangladeshi-taka-sign fa-3x opacity-50"></i>
                 </div>
             </div>
         </div>
@@ -356,7 +356,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                 ?> fa-2x text-primary mb-2"></i>
                 <h6 class="fw-bold mb-1"><?php echo ucfirst(str_replace('_', ' ', $payment['payment_method'])); ?></h6>
                 <p class="small text-muted mb-0"><?php echo $payment['count']; ?> donations</p>
-                <p class="fw-bold text-success mb-0">$<?php echo number_format($payment['total'], 2); ?></p>
+                <p class="fw-bold text-success mb-0">৳<?php echo number_format($payment['total'], 2); ?></p>
             </div>
         </div>
     </div>
@@ -515,7 +515,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="fw-bold text-success fs-5">$<?php echo number_format($donation['amount'], 2); ?></span>
+                                    <span class="fw-bold text-success fs-5">৳<?php echo number_format($donation['amount'], 2); ?></span>
                                 </td>
                                 <td>
                                     <?php
