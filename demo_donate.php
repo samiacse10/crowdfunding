@@ -88,8 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Demo Notice -->
             <div class="alert alert-info text-center mb-4 rounded-4 border-0 shadow-sm">
                 <i class="fa-solid fa-flask fa-2x mb-3"></i>
-                <!-- <h5>🎓 Demo Mode - No Real Money</h5>
-                <p class="mb-0">This is a student project demonstration. No actual payment will be processed.</p> -->
+                <h5>🎓 Demo Mode - No Real Money</h5>
+                <p class="mb-0">This is a student project demonstration. No actual payment will be processed.</p>
             </div>
             
             <!-- Campaign Card -->
