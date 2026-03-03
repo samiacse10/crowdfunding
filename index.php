@@ -104,7 +104,7 @@ $campaigns = $unique_campaigns;
 <!-- Hero Section with Professional Design -->
 <div class="hero-section text-white text-center py-5 mb-5">
     <div class="container py-5">
-        <h1 class="display-4 fw-bold mb-4 animate__animated animate__fadeInDown">Small Donation. Big Impact.</h1>
+        <h1 class="display-4 fw-bold mb-4 animate__animated animate__fadeInDown">Small Donation! Big Impact!</h1>
         <p class="lead mb-5 animate__animated animate__fadeInUp">Even a small donation can create a big impact in someone's life.</p>
         <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 animate__animated animate__fadeIn">
             <?php if (!isLoggedIn()): ?>
