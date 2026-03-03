@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
                         <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">
                             <i class="fa-solid fa-flask me-2"></i>
-                            Complete Demo Donation
+                            Complete  Donation
                         </button>
                     </form>
                 </div>
