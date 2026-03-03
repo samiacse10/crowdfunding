@@ -68,6 +68,23 @@ if (!$canView) {
     redirect('index.php');
 }
 
+// Check for unread messages count (for campaign owner)
+$unread_count = 0;
+if (isLoggedIn() && $isOwner) {
+    // First, check if messages table exists
+    try {
+        $checkTableStmt = $pdo->query("SHOW TABLES LIKE 'messages'");
+        if ($checkTableStmt->rowCount() > 0) {
+            $unreadStmt = $pdo->prepare("SELECT COUNT(*) FROM messages WHERE campaign_id = ? AND receiver_id = ? AND is_read = 0");
+            $unreadStmt->execute([$id, $_SESSION['user_id']]);
+            $unread_count = $unreadStmt->fetchColumn();
+        }
+    } catch (PDOException $e) {
+        // Messages table doesn't exist yet
+        $unread_count = 0;
+    }
+}
+
 // Check for donation success message from session
 $donation_success = isset($_SESSION['donation_success']) ? $_SESSION['donation_success'] : false;
 $donation_amount = isset($_SESSION['donation_amount']) ? $_SESSION['donation_amount'] : 0;
@@ -284,6 +301,8 @@ if ($donation_success) {
             background-color: #f0f0f0;
             opacity: 0;
             animation: confetti 5s ease-in-out;
+            pointer-events: none;
+            z-index: 9999;
         }
 
         @keyframes confetti {
@@ -295,6 +314,36 @@ if ($donation_success) {
                 transform: translateY(100vh) rotate(720deg);
                 opacity: 0;
             }
+        }
+
+        /* Message badge styling */
+        .btn .badge {
+            position: relative;
+            top: -8px;
+            right: -5px;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            background-color: #dc3545;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Message button specific */
+        .btn-message {
+            position: relative;
         }
 
         /* Responsive adjustments */
@@ -648,19 +697,28 @@ if ($donation_success) {
                 </div>
             </div>
 
-            <!-- Action Buttons - MODIFIED FOR PUBLIC ACCESS -->
+            <!-- Action Buttons - WITH MESSAGE BUTTON ADDED -->
             <?php if ($campaign['status'] == 'approved'): ?>
                 <div class="d-flex gap-3">
                     <?php if (isLoggedIn()): ?>
                         <a href="demo_donate.php?id=<?php echo $campaign['id']; ?>" class="btn btn-primary btn-lg flex-grow-1">
                             <i class="fa-solid fa-hand-holding-heart me-2"></i>Donate Now
                         </a>
+                        
+                        <!-- MESSAGE BUTTON - ADDED HERE -->
+                        <a href="message.php?campaign_id=<?php echo $campaign['id']; ?>" class="btn btn-outline-primary btn-lg btn-message" title="Send Message to Organizer">
+                            <i class="fa-regular fa-envelope me-1"></i>
+                            Message
+                            <?php if ($isOwner && $unread_count > 0): ?>
+                                <span class="badge"><?php echo $unread_count; ?></span>
+                            <?php endif; ?>
+                        </a>
                     <?php else: ?>
                         <a href="login.php?redirect=campaign.php?id=<?php echo $campaign['id']; ?>" class="btn btn-primary btn-lg flex-grow-1">
                             <i class="fa-solid fa-right-to-bracket me-2"></i>Login to Donate
                         </a>
                     <?php endif; ?>
-                    <a href="mailto:<?php echo htmlspecialchars($campaign['organizer_email']); ?>" class="btn btn-outline-primary btn-lg" title="Contact Organizer">
+                    <a href="mailto:<?php echo htmlspecialchars($campaign['organizer_email']); ?>" class="btn btn-outline-primary btn-lg" title="Contact Organizer via Email">
                         <i class="fa-regular fa-envelope"></i>
                     </a>
                 </div>
@@ -670,7 +728,7 @@ if ($donation_success) {
                 <div class="mt-3 text-center login-prompt">
                     <small class="text-muted">
                         <i class="fa-regular fa-circle-info me-1"></i>
-                        New here? <a href="register.php?redirect=campaign.php?id=<?php echo $campaign['id']; ?>" class="text-primary fw-semibold">Create an account</a> to support this campaign
+                        New here? <a href="register.php?redirect=campaign.php?id=<?php echo $campaign['id']; ?>" class="text-primary fw-semibold">Create an account</a> to support this campaign and message the organizer
                     </small>
                 </div>
                 <?php endif; ?>
