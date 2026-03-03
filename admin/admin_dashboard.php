@@ -239,7 +239,7 @@ try {
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <span class="stat-label">Total Donations</span>
-                    <h3 class="stat-value">$<?php echo number_format($total_donation_amount, 2); ?></h3>
+                    <h3 class="stat-value"><?php echo number_format($total_donation_amount, 2); ?></h3>
                     <span class="stat-trend text-white-50">
                         <i class="fa-regular fa-circle-check me-1"></i>
                         <?php echo number_format($total_donations); ?> donations
