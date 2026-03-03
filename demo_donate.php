@@ -141,13 +141,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">Payment Method (Demo)</label>
+                            <label class="form-label fw-semibold">Payment Method </label>
                             <select name="payment_method" class="form-select form-select-lg" required>
-                                <option value="bkash">📱 bKash (Demo)</option>
-                                <option value="nagad">📱 Nagad (Demo)</option>
-                                <option value="rocket">🚀 Rocket (Demo)</option>
-                                <option value="bank">🏦 Bank Transfer (Demo)</option>
-                                <option value="card">💳 Credit Card (Demo)</option>
+                                <option value="bkash">📱 bKash </option>
+                                <option value="nagad">📱 Nagad </option>
+                                <option value="rocket">🚀 Rocket </option>
+                                <option value="bank">🏦 Bank Transfer </option>
+                                <option value="card">💳 Credit Card </option>
                             </select>
                             <small class="text-muted">All payment methods are simulated for demonstration</small>
                         </div>
