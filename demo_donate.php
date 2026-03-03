@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <form method="POST">
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">Amount ($)</label>
+                            <label class="form-label fw-semibold">Amount (৳)</label>
                             <div class="row g-2">
                                 <div class="col-3">
                                     <button type="button" class="btn btn-outline-primary w-100" onclick="setAmount(10)">$10</button>
