@@ -339,8 +339,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **GitHub**: [@yourusername](https://github.com/yourusername)
 - **Project Link**: [https://github.com/yourusername/crowdfunding-platform](https://github.com/yourusername/crowdfunding-platform)
 
----
 
-**⭐ Star this repository if you find it useful!**
-
-**Happy Fundraising!** 🚀
