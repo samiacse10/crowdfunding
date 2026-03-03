@@ -706,13 +706,13 @@ if ($donation_success) {
                         </a>
                         
                         <!-- MESSAGE BUTTON - ADDED HERE -->
-                        <!-- <a href="message.php?campaign_id=<?php echo $campaign['id']; ?>" class="btn btn-outline-primary btn-lg btn-message" title="Send Message to Organizer">
+                        <a href="message.php?campaign_id=<?php echo $campaign['id']; ?>" class="btn btn-outline-primary btn-lg btn-message" title="Send Message to Organizer">
                             <i class="fa-regular fa-envelope me-1"></i>
                             Message
                             <?php if ($isOwner && $unread_count > 0): ?>
                                 <span class="badge"><?php echo $unread_count; ?></span>
                             <?php endif; ?>
-                        </a> -->
+                        </a>
                     <?php else: ?>
                         <a href="login.php?redirect=campaign.php?id=<?php echo $campaign['id']; ?>" class="btn btn-primary btn-lg flex-grow-1">
                             <i class="fa-solid fa-right-to-bracket me-2"></i>Login to Donate
