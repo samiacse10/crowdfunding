@@ -700,7 +700,7 @@
 
                         Users can start their own fundraising campaigns, share their stories, and receive support from kind-hearted people. At the same time, donors can explore meaningful causes and contribute with confidence, knowing their generosity creates real impact.
 
-                        We believe that even a small donation can change a life. Together, we turn kindness into hope and hope into real change.
+                        We believe that even a small donation can change a life. Together, we turn kindness into hope and hope into real change. Join us in making a difference, one campaign at a time.
                     </p>
                 </div>
             </div>

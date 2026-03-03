@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 $image_path = $target_file;
             } else {
-                $errors[] = "Failed to upload image";
+                $errors[] = "Failed to upload image. Please try again.";
             }
         }
     }

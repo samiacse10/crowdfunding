@@ -26,7 +26,7 @@ if (!$donation) {
         <div class="success-icon mb-4">
             <i class="fa-solid fa-circle-check fa-5x text-success"></i>
         </div>
-        <h1 class="display-5 fw-bold mb-3">Thank You for Your Donation!</h1>
+        <h1 class="display-5 fw-bold mb-3">Thank You for Your Donation!!!</h1>
         <p class="lead text-muted">Your support means the world to us and the campaign creator.</p>
     </div>
     
