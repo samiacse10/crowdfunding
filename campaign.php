@@ -243,10 +243,10 @@ if ($donation_success) {
         }
 
         /* Donation message tooltip */
-        .donation-message {
+        /* .donation-message {
             cursor: help;
             border-bottom: 1px dashed #ccc;
-        }
+        } */
 
         /* Success alert styling */
         .alert-success {
