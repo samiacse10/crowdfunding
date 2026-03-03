@@ -3,7 +3,7 @@ require_once 'header.php';
 
 // Check if user is logged in
 if (!isLoggedIn()) {
-    $_SESSION['error'] = "Please login to make a demo donation";
+    $_SESSION['error'] = "Please login to make a  donation";
     redirect('login.php');
 }
 
