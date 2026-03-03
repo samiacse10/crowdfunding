@@ -229,7 +229,7 @@ $campaigns = $unique_campaigns;
                 <div class="stat-card bg-success text-white p-4 rounded-4">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <div class="stat-value display-5 fw-bold mb-1">$<?php echo number_format($total_raised, 0); ?></div>
+                            <div class="stat-value display-5 fw-bold mb-1">৳<?php echo number_format($total_raised, 0); ?></div>
                             <p class="mb-0 opacity-75">Total Raised</p>
                         </div>
                         <div class="stat-icon">
