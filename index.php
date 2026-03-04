@@ -293,8 +293,8 @@ $campaigns = $unique_campaigns;
                             <!-- Progress Bar -->
                             <div class="mb-4">
                                 <div class="d-flex justify-content-between mb-2">
-                                    <span class="fw-bold text-primary">$<?php echo number_format($campaign['raised_amount'], 0); ?></span>
-                                    <span class="text-muted small">of $<?php echo number_format($campaign['target_amount'], 0); ?></span>
+                                    <span class="fw-bold text-primary">৳<?php echo number_format($campaign['raised_amount'], 0); ?></span>
+                                    <span class="text-muted small">of ৳<?php echo number_format($campaign['target_amount'], 0); ?></span>
                                 </div>
                                 <div class="progress" style="height: 8px;">
                                     <div class="progress-bar bg-success rounded-pill" 
