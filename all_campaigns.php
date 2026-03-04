@@ -199,8 +199,8 @@ foreach ($campaigns as &$campaign) {
                             <!-- Progress Bar -->
                             <div class="mb-4">
                                 <div class="d-flex justify-content-between mb-2">
-                                    <span class="fw-bold text-primary">$<?php echo number_format($campaign['raised_amount'], 0); ?></span>
-                                    <span class="text-muted">of $<?php echo number_format($campaign['target_amount'], 0); ?></span>
+                                    <span class="fw-bold text-primary">৳<?php echo number_format($campaign['raised_amount'], 0); ?></span>
+                                    <span class="text-muted">of ৳<?php echo number_format($campaign['target_amount'], 0); ?></span>
                                 </div>
                                 <div class="progress" style="height: 10px;">
                                     <div class="progress-bar bg-success" 
