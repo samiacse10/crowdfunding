@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (strlen($description) < 50) $errors[] = "Description must be at least 50 characters long";
     
     if ($target_amount <= 0) $errors[] = "Target amount must be greater than zero";
-    if ($target_amount > 1000000) $errors[] = "Target amount cannot exceed $1,000,000";
+    if ($target_amount > 1000000) $errors[] = "Target amount cannot exceed ৳10,00,000";
     
     if (empty($_FILES["image"]["name"])) {
         $errors[] = "Campaign image is required";
@@ -243,10 +243,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="mb-4">
                             <label for="target_amount" class="form-label fw-semibold">
                                 <i class="fa-solid fa-coins text-primary me-1"></i>
-                                Target Amount ($) <span class="text-danger">*</span>
+                                Target Amount (৳) <span class="text-danger">*</span>
                             </label>
                             <div class="input-group">
-                                <span class="input-group-text bg-light border-0 rounded-start-3">$</span>
+                                <span class="input-group-text bg-light border-0 rounded-start-3">৳</span>
                                 <input type="number" 
                                        step="0.01" 
                                        min="1" 
@@ -260,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                             <div class="form-text">
                                 <i class="fa-regular fa-circle-check me-1"></i>
-                                Enter amount between $1 and $1,000,000
+                                Enter amount between ৳1 and ৳10,00,000
                             </div>
                         </div>
 
@@ -375,7 +375,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         
                         <div class="preview-target fw-bold text-primary">
-                            Target: $0.00
+                            Target: ৳0.00
                         </div>
                     </div>
                     
@@ -740,9 +740,9 @@ document.getElementById('description')?.addEventListener('input', function() {
 
 document.getElementById('target_amount')?.addEventListener('input', function() {
     if (this.value) {
-        document.querySelector('.preview-target').innerHTML = `Target: $${parseFloat(this.value).toFixed(2)}`;
+        document.querySelector('.preview-target').innerHTML = `Target: ৳${parseFloat(this.value).toFixed(2)}`;
     } else {
-        document.querySelector('.preview-target').innerHTML = 'Target: $0.00';
+        document.querySelector('.preview-target').innerHTML = 'Target: ৳0.00';
     }
 });
 
