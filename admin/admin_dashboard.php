@@ -254,8 +254,8 @@ try {
                     <div class="progress-bar bg-white" style="width: 75%"></div>
                 </div>
                 <div class="d-flex justify-content-between mt-2 small">
-                    <span>Today: <strong>$<?php echo number_format($donations_today, 2); ?></strong></span>
-                    <span>Avg: <strong>$<?php echo number_format($avg_donation, 2); ?></strong></span>
+                    <span>Today: <strong>৳<?php echo number_format($donations_today, 2); ?></strong></span>
+                    <span>Avg: <strong>৳<?php echo number_format($avg_donation, 2); ?></strong></span>
                 </div>
             </div>
         </div>
@@ -541,7 +541,7 @@ try {
                             <div class="flex-grow-1">
                                 <h6 class="fw-bold mb-1"><?php echo htmlspecialchars(substr($camp['title'], 0, 30)); ?>...</h6>
                                 <div class="d-flex justify-content-between small">
-                                    <span class="text-muted">Raised: $<?php echo number_format($camp['raised_amount'], 2); ?></span>
+                                    <span class="text-muted">Raised: ৳<?php echo number_format($camp['raised_amount'], 2); ?></span>
                                     <span class="text-primary"><?php echo $camp['donation_count']; ?> donors</span>
                                 </div>
                                 <div class="progress mt-1" style="height: 4px;">
@@ -651,7 +651,7 @@ try {
                                 <div class="d-flex justify-content-between align-items-start">
                                     <div>
                                         <h6 class="fw-bold mb-1">
-                                            $<?php echo number_format($donation['amount'], 2); ?> 
+                                            ৳<?php echo number_format($donation['amount'], 2); ?> 
                                             <span class="fw-normal text-muted">to</span>
                                             <?php echo htmlspecialchars(substr($donation['campaign_title'], 0, 30)); ?>...
                                         </h6>
@@ -1023,7 +1023,7 @@ new Chart(ctx, {
     data: {
         labels: <?php echo json_encode($monthly_labels); ?>,
         datasets: [{
-            label: 'Donations ($)',
+            label: 'Donations (৳)',
             data: <?php echo json_encode($monthly_donations); ?>,
             borderColor: 'rgba(0, 198, 255, 1)',
             backgroundColor: 'rgba(0, 198, 255, 0.1)',
@@ -1058,7 +1058,7 @@ new Chart(ctx, {
                         let label = context.dataset.label || '';
                         if (label) label += ': ';
                         if (context.dataset.label.includes('Donations')) {
-                            label += '$' + context.raw.toFixed(2);
+                            label += '৳' + context.raw.toFixed(2);
                         } else {
                             label += context.raw;
                         }
@@ -1074,7 +1074,7 @@ new Chart(ctx, {
                 position: 'left',
                 ticks: {
                     callback: function(value) {
-                        return '$' + value;
+                        return '৳' + value;
                     }
                 }
             },

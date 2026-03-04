@@ -61,7 +61,7 @@ include 'admin_header.php';
                 <td><?php echo htmlspecialchars($campaign['title']); ?></td>
                 <td><?php echo htmlspecialchars($campaign['category_name'] ?? 'Uncategorized'); ?></td>
                 <td><?php echo htmlspecialchars($campaign['username']); ?></td>
-                <td>$<?php echo number_format($campaign['target_amount'], 2); ?></td>
+                <td>৳<?php echo number_format($campaign['target_amount'], 2); ?></td>
                 <td>
                     <?php
                     $badge_class = '';
