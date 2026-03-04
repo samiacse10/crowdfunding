@@ -468,7 +468,7 @@ if ($donation_success) {
             <div>
                 <h4 class="alert-heading mb-1">Thank You for Your Generous Donation! 🎉</h4>
                 <p class="mb-0 fs-5">
-                    <strong class="fs-4">$<?php echo number_format($donation_amount, 2); ?></strong> has been successfully donated
+                    <strong class="fs-4">৳<?php echo number_format($donation_amount, 2); ?></strong> has been successfully donated
                     <?php if ($donation_name && $donation_name != 'Anonymous'): ?>
                         by <strong><?php echo htmlspecialchars($donation_name); ?></strong>
                     <?php endif; ?>
@@ -654,8 +654,8 @@ if ($donation_success) {
                     
                     <!-- Raised Amount -->
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
-                        <span class="h3 fw-bold text-primary">$<?php echo number_format($campaign['raised_amount'], 2); ?></span>
-                        <span class="text-muted">of $<?php echo number_format($campaign['target_amount'], 2); ?></span>
+                        <span class="h3 fw-bold text-primary">৳<?php echo number_format($campaign['raised_amount'], 2); ?></span>
+                        <span class="text-muted">of ৳<?php echo number_format($campaign['target_amount'], 2); ?></span>
                     </div>
                     
                     <!-- Progress Bar -->
@@ -848,7 +848,7 @@ if ($donation_success) {
                                                 <span class="badge bg-success ms-2">New!</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="fw-bold text-success">$<?php echo number_format($donation['amount'], 2); ?></td>
+                                        <td class="fw-bold text-success">৳<?php echo number_format($donation['amount'], 2); ?></td>
                                         <td>
                                             <?php if (!empty($donation['message'])): ?>
                                                 <span class="donation-message" title="<?php echo htmlspecialchars($donation['message']); ?>">
